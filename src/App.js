@@ -39,12 +39,14 @@ class App extends Component {
     return (
       <div className="bg-white">
         <div className="container mx-auto py-10">
+          <div className="lg:hidden py-10">Warning: mobile isn't supported yet; please use a desktop browser.</div>
+
           {/* Background Color Header */}
           <div className="flex pl-28 py-2">
             <h2 className="uppercase">Background Color</h2>
-            <button type="button" className="ml-2 inline-flex items-center px-2.5 py-1.5 border border-gray-300 shadow-sm text-xs font-medium rounded text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            {/* <button type="button" className="ml-2 inline-flex items-center px-2.5 py-1.5 border border-gray-300 shadow-sm text-xs font-medium rounded text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
               Add Bg Color
-            </button>
+            </button> */}
           </div>
 
           <div className="flex">
@@ -104,9 +106,9 @@ class App extends Component {
 
           <div className="flex">
             <div className="w-28 h-20 relative">
-              <button type="button" className="mt-2 inline-flex items-center px-2.5 py-1.5 border border-gray-300 shadow-sm text-xs font-medium rounded text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+              {/* <button type="button" className="mt-2 inline-flex items-center px-2.5 py-1.5 border border-gray-300 shadow-sm text-xs font-medium rounded text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                 Add Fg Color
-              </button>
+              </button> */}
             </div>
           </div>
 
