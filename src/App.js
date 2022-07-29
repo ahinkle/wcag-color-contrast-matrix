@@ -88,13 +88,14 @@ class App extends Component {
                         </div>
                       )
                   } else {
-                        return (
-                          <div className="w-28 h-20 border-r border-b border-black relative" key={index}>
-                            <div className="h-16 w-24 m-2 p-2" style={{ backgroundColor: bgColor }} >
-                              <h2 className="text-sm uppercase text-center" style={{ color: fgColor }}>{scoreFromRatio(contrastRatio)}</h2>
-                            </div>
+                      return (
+                        <div className="w-28 h-20 border-r border-b border-black relative" key={index}>
+                          <div className="h-16 w-24 m-2 p-2" style={{ backgroundColor: bgColor }} >
+                            <p className="text-sm font-semibold uppercase text-center pt-3" style={{ color: fgColor }}>{scoreFromRatio(contrastRatio)}</p>
+                            <p className="text-center uppercase text-red-500 absolute bottom-0 right-0 pr-1 pb-1 text-xs mr-1 mb-0.5" style={{ color: fgColor }}>{contrastRatio}</p>
                           </div>
-                        )
+                        </div>
+                      )
                   }
                 })}
               </div>
