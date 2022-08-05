@@ -1,10 +1,12 @@
 import './App.css';
 import React, { Component } from 'react'
 import { scoreFromRatio, ratio } from 'wcag-color'
+import clsx from 'clsx';
 
 class App extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       bgColors : [
         '#14532d',
@@ -30,19 +32,23 @@ class App extends Component {
         '#f3f4f6',
         '#f9fafb',
       ],
-      baseFontSize: 14,
-      largeFontSize: 16,
     }
+  }
+
+  determineBestTextColor = (bgColor) => {
+    const bgColorScore = scoreFromRatio(ratio(bgColor, '#fff'));
+    const fgColorScore = scoreFromRatio(ratio(bgColor, '#000'));
+    return fgColorScore > bgColorScore ? '#fff' : '#000';
   }
 
   render() {
     return (
       <div className="bg-white">
-        <div className="container mx-auto py-10">
-          <div className="lg:hidden py-10">Warning: mobile isn't supported yet; please use a desktop browser.</div>
+        <div className="container py-10 mx-auto">
+          <div className="py-10 lg:hidden">Warning: mobile isn't supported yet; please use a desktop browser.</div>
 
           {/* Background Color Header */}
-          <div className="flex pl-28 py-2">
+          <div className="flex py-2 pl-28">
             <h2 className="uppercase">Background Color</h2>
             {/* <button type="button" className="ml-2 inline-flex items-center px-2.5 py-1.5 border border-gray-300 shadow-sm text-xs font-medium rounded text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
               Add Bg Color
@@ -51,16 +57,16 @@ class App extends Component {
 
           <div className="flex">
             {/* Foreground Color Header */}
-            <div className="w-28 h-20 border-r border-b border-black relative">
-              <h2 className="uppercase absolute bottom-0 left-0">Foreground Color</h2>
+            <div className="relative h-20 border-b border-r border-black w-28">
+              <h2 className="absolute bottom-0 left-0 uppercase">Foreground Color</h2>
             </div>
 
             {/* Background Color List */}
             {this.state.bgColors.map((bgColor, index) => {
               return (
-                <div className="w-28 h-20 border-r border-b border-black relative" key={index}>
-                  <div className="h-16 w-24 m-2 p-2" style={{ backgroundColor: bgColor }} >
-                    <h2 className="text-sm uppercase">{bgColor}</h2>
+                <div className="relative h-20 border-b border-r border-black w-28" key={index}>
+                  <div className="w-24 h-16 p-2 m-2" style={{ backgroundColor: bgColor }} >
+                    <h2 className="text-sm uppercase" style={{ color: this.determineBestTextColor(bgColor) }}>{bgColor}</h2>
                   </div>
                 </div>
               )
@@ -72,9 +78,9 @@ class App extends Component {
           {this.state.fgColors.map((fgColor, index) => {
             return (
               <div className="flex" key={index}>
-                <div className="w-28 h-20 border-r border-b border-black relative">
-                  <div className="h-16 w-24 m-2 p-2" style={{ backgroundColor: fgColor }} >
-                    <p className="text-sm uppercase">{fgColor}</p>
+                <div className="relative h-20 border-b border-r border-black w-28">
+                  <div className="w-24 h-16 p-2 m-2" style={{ backgroundColor: fgColor }} >
+                    <p className="text-sm uppercase" style={{ color: this.determineBestTextColor(fgColor)}}>{fgColor}</p>
                   </div>
                 </div>
 
@@ -85,15 +91,15 @@ class App extends Component {
 
                   if (scoreFromRatio(contrastRatio) === 'Fail') {
                       return (
-                        <div className="w-28 h-20 border-r border-b border-black relative" key={index}>
-                          <p className="text-center uppercase text-red-500 absolute bottom-0 right-0 pr-1 pb-1 font-bold">F</p>
+                        <div className="relative h-20 border-b border-r border-black w-28" key={index}>
+                          <p className="absolute bottom-0 right-0 pb-1 pr-1 font-bold text-center text-red-500 uppercase">F</p>
                         </div>
                       )
                   } else {
                       return (
-                        <div className="w-28 h-20 border-r border-b border-black relative" key={index}>
-                          <div className="h-16 w-24 m-2 p-2" style={{ backgroundColor: bgColor }} >
-                            <p className="text-sm font-semibold uppercase text-center pt-3" style={{ color: fgColor }}>{scoreFromRatio(contrastRatio)}</p>
+                        <div className="relative h-20 border-b border-r border-black w-28" key={index}>
+                          <div className="w-24 h-16 p-2 m-2" style={{ backgroundColor: bgColor }} >
+                            <p className="pt-3 text-sm font-semibold text-center uppercase" style={{ color: fgColor }}>{scoreFromRatio(contrastRatio)}</p>
                             <p className="text-center uppercase text-red-500 absolute bottom-0 right-0 pr-1 pb-1 text-xs mr-1 mb-0.5" style={{ color: fgColor }}>{contrastRatio}</p>
                           </div>
                         </div>
@@ -105,7 +111,7 @@ class App extends Component {
           })}
 
           <div className="flex">
-            <div className="w-28 h-20 relative">
+            <div className="relative h-20 w-28">
               {/* <button type="button" className="mt-2 inline-flex items-center px-2.5 py-1.5 border border-gray-300 shadow-sm text-xs font-medium rounded text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                 Add Fg Color
               </button> */}
