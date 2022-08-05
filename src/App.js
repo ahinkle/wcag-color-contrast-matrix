@@ -41,6 +41,13 @@ class App extends Component {
     return fgColorScore > bgColorScore ? '#fff' : '#000';
   }
 
+  deleteForegroundColor = (index) => {
+    const { fgColors } = this.state;
+    fgColors.splice(index, 1);
+    this.setState({ fgColors });
+  }
+
+
   render() {
     return (
       <div className="bg-white">
@@ -78,8 +85,14 @@ class App extends Component {
           {this.state.fgColors.map((fgColor, index) => {
             return (
               <div className="flex" key={index}>
-                <div className="relative h-20 border-b border-r border-black w-28">
-                  <div className="w-24 h-16 p-2 m-2" style={{ backgroundColor: fgColor }} >
+                <div className="relative h-20 border-b border-r border-black w-28 group">
+                  <div className="relative w-24 h-16 p-2 m-2" style={{ backgroundColor: fgColor }} >
+                    <span
+                      className="absolute top-0 right-0 px-2 py-1 -mt-1.5 -mr-1.5 text-sm text-white uppercase bg-red-500 rounded-full hidden group-hover:block cursor-pointer"
+                      onClick={() => this.deleteForegroundColor(index)}
+                    >
+                      x
+                    </span>
                     <p className="text-sm uppercase" style={{ color: this.determineBestTextColor(fgColor)}}>{fgColor}</p>
                   </div>
                 </div>
