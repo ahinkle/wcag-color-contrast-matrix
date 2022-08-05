@@ -58,8 +58,8 @@ class App extends Component {
     const bgColors = [];
     const fgColors = [];
     for (let i = 0; i < numberOfColors; i++) {
-      bgColors.push('#' + Math.floor(Math.random() * 16777215).toString(16));
-      fgColors.push('#' + Math.floor(Math.random() * 16777215).toString(16));
+      bgColors.push('#' + (Math.random() * 0xFFFFFF << 0).toString(16).padStart(6, '0'));
+      fgColors.push('#' + (Math.random() * 0xFFFFFF << 0).toString(16).padStart(6, '0'));
     }
     this.setState({ bgColors, fgColors });
   }
@@ -122,7 +122,7 @@ class App extends Component {
             return (
               <div className="flex" key={index}>
                 <div className="relative h-20 border-b border-r border-black w-28 group">
-                  <div className="relative w-24 h-16 p-2 m-2" style={{ backgroundColor: fgColor }} >
+                  <div className="relative w-24 h-16 p-2 m-2 group" style={{ backgroundColor: fgColor }} >
                     <span
                       className="absolute top-0 right-0 px-2 py-1 -mt-1.5 -mr-1.5 text-sm text-white uppercase bg-red-500 rounded-full hidden group-hover:block cursor-pointer"
                       onClick={() => this.deleteForegroundColor(index)}
