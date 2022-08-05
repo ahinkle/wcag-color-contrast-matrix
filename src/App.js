@@ -53,10 +53,35 @@ class App extends Component {
     this.setState({ bgColors });
   }
 
+  randomizeColors = () => {
+    const numberOfColors = 10;
+    const bgColors = [];
+    const fgColors = [];
+    for (let i = 0; i < numberOfColors; i++) {
+      bgColors.push('#' + Math.floor(Math.random() * 16777215).toString(16));
+      fgColors.push('#' + Math.floor(Math.random() * 16777215).toString(16));
+    }
+    this.setState({ bgColors, fgColors });
+  }
+
+  randomForegroundColor = () => {
+    const { fgColors } = this.state;
+    const randomColor = Math.floor(Math.random() * 16777215).toString(16);
+    fgColors.push('#' + randomColor);
+    this.setState({ fgColors });
+  }
+
+  clear = () => {
+    this.setState({
+      bgColors: [],
+      fgColors: [],
+    });
+  }
+
   render() {
     return (
       <div className="bg-white">
-        <div className="container py-10 mx-auto">
+        <div className="container pt-10 mx-auto">
           <div className="py-10 lg:hidden">Warning: mobile isn't supported yet; please use a desktop browser.</div>
 
           {/* Background Color Header */}
@@ -115,9 +140,11 @@ class App extends Component {
 
                   if (scoreFromRatio(contrastRatio) === 'Fail') {
                       return (
-                        <div className="relative h-20 border-b border-r border-black w-28 group" key={index}>
-                          <p className="absolute bottom-0 right-0 pb-1 pr-1 font-bold text-center text-red-500 uppercase">F</p>
-                          <p className="text-center uppercase text-red-500 absolute bottom-0 left-0 pl-1 pb-1 text-xs mr-1 mb-0.5 hidden group-hover:block">{contrastRatio}</p>
+                        <div className="group">
+                            <div className="relative h-20 border-b border-r border-black group-hover:border-red-500 group-hover:border-4 w-28" key={index}>
+                            <p className="absolute bottom-0 right-0 pb-1 pr-1 font-bold text-center text-red-500 uppercase">F</p>
+                            <p className="text-center uppercase text-red-500 absolute bottom-0 left-0 pl-1 pb-1 text-xs mr-1 mb-0.5 hidden group-hover:block">{contrastRatio}</p>
+                            </div>
                         </div>
                       )
                   } else {
@@ -125,7 +152,7 @@ class App extends Component {
                         <div className="relative h-20 border-b border-r border-black w-28 group" key={index}>
                           <div className="w-24 h-16 p-2 m-2" style={{ backgroundColor: bgColor }} >
                             <p className="pt-3 text-sm font-semibold text-center uppercase" style={{ color: fgColor }}>{scoreFromRatio(contrastRatio)}</p>
-                            <p className="text-center uppercase text-red-500 absolute bottom-0 right-0 pr-1 pb-1 text-xs mr-1 mb-0.5 hidden group-hover:block" style={{ color: fgColor }}>{contrastRatio}</p>
+                            <p className="text-center uppercase text-red-500 absolute bottom-0 right-0 pr-2 pb-1.5 text-xs mr-1 mb-0.5 hidden group-hover:block" style={{ color: fgColor }}>{contrastRatio}</p>
                           </div>
                         </div>
                       )
@@ -143,6 +170,24 @@ class App extends Component {
             </div>
           </div>
 
+        </div>
+
+        <div className="container mx-auto">
+          <button
+            type="button"
+            className="mt-2 inline-flex items-center px-2.5 py-1.5 border border-gray-300 shadow-sm text-xs font-medium rounded text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            onClick={this.clear}
+          >
+              Clear All
+          </button>
+
+          <button
+            type="button"
+            className="ml-5 mt-2 inline-flex items-center px-2.5 py-1.5 border border-gray-300 shadow-sm text-xs font-medium rounded text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            onClick={this.randomizeColors}
+          >
+            Randomize
+          </button>
         </div>
       </div>
     );
