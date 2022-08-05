@@ -47,6 +47,11 @@ class App extends Component {
     this.setState({ fgColors });
   }
 
+  deleteBackgroundColor = (index) => {
+    const { bgColors } = this.state;
+    bgColors.splice(index, 1);
+    this.setState({ bgColors });
+  }
 
   render() {
     return (
@@ -71,8 +76,14 @@ class App extends Component {
             {/* Background Color List */}
             {this.state.bgColors.map((bgColor, index) => {
               return (
-                <div className="relative h-20 border-b border-r border-black w-28" key={index}>
-                  <div className="w-24 h-16 p-2 m-2" style={{ backgroundColor: bgColor }} >
+                <div className="relative h-20 border-b border-r border-black w-28 group" key={index}>
+                  <div className="relative w-24 h-16 p-2 m-2" style={{ backgroundColor: bgColor }} >
+                    <span
+                      className="absolute top-0 right-0 px-2 py-1 -mt-1.5 -mr-1.5 text-sm text-white uppercase bg-red-500 rounded-full hidden group-hover:block cursor-pointer"
+                      onClick={() => this.deleteBackgroundColor(index)}
+                    >
+                      x
+                    </span>
                     <h2 className="text-sm uppercase" style={{ color: this.determineBestTextColor(bgColor) }}>{bgColor}</h2>
                   </div>
                 </div>
@@ -104,16 +115,17 @@ class App extends Component {
 
                   if (scoreFromRatio(contrastRatio) === 'Fail') {
                       return (
-                        <div className="relative h-20 border-b border-r border-black w-28" key={index}>
+                        <div className="relative h-20 border-b border-r border-black w-28 group" key={index}>
                           <p className="absolute bottom-0 right-0 pb-1 pr-1 font-bold text-center text-red-500 uppercase">F</p>
+                          <p className="text-center uppercase text-red-500 absolute bottom-0 left-0 pl-1 pb-1 text-xs mr-1 mb-0.5 hidden group-hover:block">{contrastRatio}</p>
                         </div>
                       )
                   } else {
                       return (
-                        <div className="relative h-20 border-b border-r border-black w-28" key={index}>
+                        <div className="relative h-20 border-b border-r border-black w-28 group" key={index}>
                           <div className="w-24 h-16 p-2 m-2" style={{ backgroundColor: bgColor }} >
                             <p className="pt-3 text-sm font-semibold text-center uppercase" style={{ color: fgColor }}>{scoreFromRatio(contrastRatio)}</p>
-                            <p className="text-center uppercase text-red-500 absolute bottom-0 right-0 pr-1 pb-1 text-xs mr-1 mb-0.5" style={{ color: fgColor }}>{contrastRatio}</p>
+                            <p className="text-center uppercase text-red-500 absolute bottom-0 right-0 pr-1 pb-1 text-xs mr-1 mb-0.5 hidden group-hover:block" style={{ color: fgColor }}>{contrastRatio}</p>
                           </div>
                         </div>
                       )
