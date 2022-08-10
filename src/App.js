@@ -2,6 +2,8 @@ import './App.css';
 import React, { Component } from 'react'
 import { scoreFromRatio, ratio } from 'wcag-color'
 import clsx from 'clsx';
+import ColorBlockFailure from './Components/ColorBlockFailure';
+import ColorBlock from './Components/ColorBlock';
 
 class App extends Component {
   constructor(props) {
@@ -140,22 +142,12 @@ class App extends Component {
 
                   if (scoreFromRatio(contrastRatio) === 'Fail') {
                       return (
-                        <div className="group">
-                            <div className="relative h-20 border-b border-r border-black group-hover:border-red-500 group-hover:border-4 w-28" key={index}>
-                            <p className="absolute bottom-0 right-0 pb-1 pr-1 font-bold text-center text-red-500 uppercase">F</p>
-                            <p className="text-center uppercase text-red-500 absolute bottom-0 left-0 pl-1 pb-1 text-xs mr-1 mb-0.5 hidden group-hover:block">{contrastRatio}</p>
-                            </div>
-                        </div>
+                        <ColorBlockFailure key={index} contrastRatio={contrastRatio} />
                       )
                   } else {
-                      return (
-                        <div className="relative h-20 border-b border-r border-black w-28 group" key={index}>
-                          <div className="w-24 h-16 p-2 m-2" style={{ backgroundColor: bgColor }} >
-                            <p className="pt-3 text-sm font-semibold text-center uppercase" style={{ color: fgColor }}>{scoreFromRatio(contrastRatio)}</p>
-                            <p className="text-center uppercase text-red-500 absolute bottom-0 right-0 pr-2 pb-1.5 text-xs mr-1 mb-0.5 hidden group-hover:block" style={{ color: fgColor }}>{contrastRatio}</p>
-                          </div>
-                        </div>
-                      )
+                    return (
+                        <ColorBlock key={index} bgColor={bgColor} fgColor={fgColor} />
+                    )
                   }
                 })}
               </div>
@@ -164,7 +156,9 @@ class App extends Component {
 
           <div className="flex">
             <div className="relative h-20 w-28">
-              {/* <button type="button" className="mt-2 inline-flex items-center px-2.5 py-1.5 border border-gray-300 shadow-sm text-xs font-medium rounded text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+              {/* <button
+                  type="button"
+                  className="mt-2 inline-flex items-center px-2.5 py-1.5 border border-gray-300 shadow-sm text-xs font-medium rounded text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                 Add Fg Color
               </button> */}
             </div>
